@@ -1,3 +1,93 @@
-<p>
-  animal-form works!
-</p>
+<app-page-header
+  [pageTitle]="pageTitle"
+  buttonText="<< Voltar"
+  buttonLink="/animals"
+  buttonClass="btn-light"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()">
+
+  <div class="card">
+    <div class="card-header">
+      Informações sobre o Animal
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+
+        <!-- name -->
+        <div class="form-group col-md-6">
+            <label for="name">Animal</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+  
+            <app-form-field-error [form-control]="resourceForm.get('name')"></app-form-field-error>
+          </div>
+
+          <!-- birthday -->
+        <div class="form-group col-md-3">
+            <label for="birthday">Data de Nascimento</label>
+            <input type="date" id="birthday" formControlName="birthday" class="form-control">
+  
+            <app-form-field-error [form-control]="resourceForm.get('birthday')"></app-form-field-error>
+          </div>
+
+          <!-- specieId -->
+        <div class="form-group col-md-3">
+            <label for="specieId">Espécie</label>
+  
+            <select name="specieId" id="specieId" formControlName="specieId" class="form-control">
+              <option *ngFor="let specie of species" [value]="specie.id">{{ specie.name }}</option>
+            </select>
+  
+            <app-form-field-error [form-control]="resourceForm.get('specieId')"></app-form-field-error>
+          </div>
+        
+      </div>
+
+      <div class="form-row">
+
+        <!-- gender -->
+        <div class="form-group col-md-2">
+            <label for="gender">Sexo</label>
+  
+            <select name="gender" id="gender" formControlName="gender" class="form-control">
+              <option *ngFor="let option of genderOptions" [value]="option.value">{{ option.text }}</option>
+            </select>
+  
+            <app-form-field-error [form-control]="resourceForm.get('gender')"></app-form-field-error>
+          </div>        
+        
+        <!-- fatherId -->
+        <div class="form-group col-md-5">
+          <label for="fatherId">Pai do Animal</label>
+
+          <select name="fatherId" id="fatherId" formControlName="fatherId" class="form-control">
+            <option *ngFor="let father of fathers" [value]="father.id">{{ father.name }}</option>
+          </select>
+
+          <app-form-field-error [form-control]="resourceForm.get('fatherId')"></app-form-field-error>
+        </div>
+
+        <!-- fatherId -->
+        <div class="form-group col-md-5">
+          <label for="motherId">Mãe do Animal</label>
+
+          <select name="motherId" id="motherId" formControlName="motherId" class="form-control">
+            <option *ngFor="let mother of mothers" [value]="mother.id">{{ mother.name }}</option>
+          </select>
+
+          <app-form-field-error [form-control]="resourceForm.get('motherId')"></app-form-field-error>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+
+  <button [disabled]="submittingForm || resourceForm.invalid" type="submit"
+    class="btn btn-primary btn-lg float-right mt-3">
+    Salvar
+  </button>
+
+</form>

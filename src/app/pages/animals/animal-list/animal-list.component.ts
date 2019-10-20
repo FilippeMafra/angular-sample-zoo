@@ -4,6 +4,7 @@ import { faTree, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import { BaseResourceListComponent } from 'src/app/shared/components/base-resource-list/base-resource-list.component';
 import { AnimalService } from '../shared/animal.service';
 import { Animal } from '../shared/animal.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-animal-list',
@@ -19,6 +20,15 @@ export class AnimalListComponent extends BaseResourceListComponent<Animal> {
 
   constructor(private animalService: AnimalService) {
     super(animalService);
+  }
+
+  dataFormatada(data: string): string {
+    moment.locale('pt-br');
+    return moment(data).format('L');
+  }
+
+  idade(data: string): string {
+    return (moment(data).fromNow()).replace('há', '');
   }
 
 }

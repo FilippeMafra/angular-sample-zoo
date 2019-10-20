@@ -1,11 +1,9 @@
-<ng-template [ngIf]="false">
-    <!-- <app-page-header
-    page-title="Animais"
-    button-text="+ Novo Animal"
-    button-link="new"
-    button-class="btn-success"
-    ></app-page-header> -->
-  </ng-template>
+<app-page-header
+  pageTitle="Animais"
+  buttonText="+ Novo Animal"
+  buttonLink="new"
+  buttonClass="btn-success"
+></app-page-header>
 
 <table class="table table-hover">
 
@@ -52,11 +50,11 @@
       </td>
 
       <td>
-        {{animal.birthday}}
+        {{dataFormatada(animal.birthday)}}<br>
+        <small class="text-success">{{idade(animal.birthday)}}</small>
       </td>
 
       <td class="text-center">
-
         <a [routerLink]="[animal.id, 'tree']" class="btn btn-outline-info btn-sm mr-2">
           <fa-icon [icon]="faTree"></fa-icon>
           Árvore
@@ -71,7 +69,6 @@
           <fa-icon [icon]="faTrash"></fa-icon>
           Excluir
         </button>
-
       </td>
 
     </tr>

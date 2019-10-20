@@ -20,21 +20,36 @@ export class AnimalService extends BaseResourceService<Animal> {
 
 
   create(animal: Animal): Observable<Animal> {
-    return this.setRelationshipAndSendToServer(animal, super.create.bind(this));
+    return this.setRelationshipsAndSendToServer(animal, super.create.bind(this));
   }
 
   update(animal: Animal): Observable<Animal> {
-    return this.setRelationshipAndSendToServer(animal, super.update.bind(this));
+    return this.setRelationshipsAndSendToServer(animal, super.update.bind(this));
   }
 
-  getByMonthAndYear(month: number, year: number): Observable<Animal[]> {
+  getByGender(gender: string): Observable<Animal[]> {
     return this.getAll().pipe(
-      map(animals => this.filterByMonthAndYear(animals, month, year))
+      map(animals => this.filterByGender(animals, gender))
     );
   }
 
+  private filterByGender(animals: Animal[], gender: string): Animal[] {
+    return animals.filter(animal => animal.gender === gender);
+  }
 
-  private setRelationshipAndSendToServer(animal: Animal, sendFn: any): Observable<Animal> {
+  private setRelationshipsAndSendToServer(animal: Animal, sendFn: any): Observable<Animal> {
+    // como esse problema de relacionamento é só do angular-in-memory-api não vou resolvê-lo da melhor forma.
+    // O back-end real já resolve esse problema
+    if (animal.motherId) {
+      this.getById(animal.motherId).subscribe(
+        mother => animal.mother = mother
+      );
+    }
+    if (animal.fatherId) {
+      this.getById(animal.fatherId).subscribe(
+        father => animal.father = father
+      );
+    }
     return this.specieService.getById(animal.specieId).pipe(
       flatMap(specie => {
         animal.specie = specie;
@@ -42,16 +57,6 @@ export class AnimalService extends BaseResourceService<Animal> {
       }),
       catchError(this.handleError)
     );
-  }
-
-  private filterByMonthAndYear(animals: Animal[], month: number, year: number) {
-    return animals.filter(animal => {
-      const animalDate = moment(animal.birthday, 'DD/MM/YYYY');
-      const monthMatches = animalDate.month() + 1 === month;
-      const yearMatches = animalDate.year() === year;
-
-      if (monthMatches && yearMatches) { return animal; }
-    });
   }
 
 }
