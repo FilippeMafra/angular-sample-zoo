@@ -1,0 +1,67 @@
+<app-page-header
+  [pageTitle]="pageTitle"
+  buttonText="<< Voltar"
+  buttonLink="/animals"
+  buttonClass="btn-light"
+></app-page-header>
+
+<ng-template [ngIf]="currentAnimal">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="card col-md-4">
+
+      <div class="card-body">
+        <h3 class="text-center">{{currentAnimal.name}}</h3>
+
+        <p class="text-center">
+          <strong [class.text-primary]="currentAnimal.gender === 'male'"
+            [class.text-danger]="currentAnimal.gender === 'female'">
+            {{genders[currentAnimal.gender]}}
+          </strong>
+          - {{currentAnimal.specie.name}} - idade: {{idade(currentAnimal.birthday)}}
+        </p>
+      </div>
+
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+
+  <p></p>
+
+  <div class="row">
+
+    <div class="col-md-1"></div>
+
+    <div class="card col-md-4">
+      <div *ngIf="currentAnimal.father" class="card-body">
+        <h3 class="text-center">{{currentAnimal.father.name}}</h3>
+
+        <p class="text-center">
+          <strong [class.text-primary]="currentAnimal.father.gender === 'male'"
+            [class.text-danger]="currentAnimal.father.gender === 'female'">
+            {{genders[currentAnimal.father.gender]}}
+          </strong>
+          - {{currentAnimal.specie.name}} - idade: {{idade(currentAnimal.father.birthday)}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+
+    <div class="card col-md-4">
+      <div *ngIf="currentAnimal.mother" class="card-body">
+        <h3 class="text-center">{{currentAnimal.mother.name}}</h3>
+
+        <p class="text-center">
+          <strong [class.text-primary]="currentAnimal.mother.gender === 'male'"
+            [class.text-danger]="currentAnimal.mother.gender === 'female'">
+            {{genders[currentAnimal.mother.gender]}}
+          </strong>
+          - {{currentAnimal.specie.name}} - idade: {{idade(currentAnimal.mother.birthday)}}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+</ng-template>
