@@ -58,14 +58,17 @@
       <td class="text-center">
 
         <a [routerLink]="[animal.id, 'tree']" class="btn btn-outline-info btn-sm mr-2">
+          <fa-icon [icon]="faTree"></fa-icon>
           Árvore
         </a>
 
         <a [routerLink]="[animal.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">
+          <fa-icon [icon]="faPen"></fa-icon>
           Editar
         </a>
 
         <button (click)="deleteResource(animal)" class="btn btn-outline-danger btn-sm">
+          <fa-icon [icon]="faTrash"></fa-icon>
           Excluir
         </button>
 
